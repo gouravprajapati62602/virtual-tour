@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance Assignment</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Assign Insurance Policy</h2>
+    <form id="insuranceForm">
+      <label>User Name</label>
+      <input type="text" id="user" required>
+
+      <label>Policy Type</label>
+      <select id="policyType" required>
+        <option value="">Select Type</option>
+        <option value="Life">Life</option>
+        <option value="Health">Health</option>
+      </select>
+
+      <label>Policy</label>
+      <select id="policy" required>
+        <option value="">Select Policy</option>
+      </select>
+
+      <label>Investment Amount</label>
+      <input type="text" id="investment" readonly>
+
+      <label>Coverage Amount</label>
+      <input type="text" id="coverage" readonly>
+
+      <label>Start Date</label>
+      <input type="date" id="startDate" required>
+
+      <label>Expiry Date</label>
+      <input type="date" id="expiryDate" readonly>
+
+      <button type="submit">Assign</button>
+    </form>
+  </div>
+
+  <script>
+    const policies = {
+      Life: [
+        { name: "LIC Jeevan Anand", investment: 10000, coverage: 500000, duration: 12 },
+        { name: "HDFC Life Plan", investment: 8000, coverage: 400000, duration: 10 }
+      ],
+      Health: [
+        { name: "Star Health", investment: 6000, coverage: 200000, duration: 5 },
+        { name: "Max Bupa", investment: 5000, coverage: 150000, duration: 4 }
+      ]
+    };
+
+    document.getElementById('policyType').addEventListener('change', function () {
+      const type = this.value;
+      const policyDropdown = document.getElementById('policy');
+      policyDropdown.innerHTML = '<option value="">Select Policy</option>';
+
+      if (policies[type]) {
+        policies[type].forEach((p, i) => {
+          policyDropdown.innerHTML += `<option value="${i}">${p.name}</option>`;
+        });
+      }
+    });
+
+    document.getElementById('policy').addEventListener('change', function () {
+      const type = document.getElementById('policyType').value;
+      const index = this.value;
+      const start = document.getElementById('startDate').value;
+
+      if (type && policies[type][index]) {
+        const p = policies[type][index];
+        document.getElementById('investment').value = p.investment;
+        document.getElementById('coverage').value = p.coverage;
+
+        if (start) {
+          const startDate = new Date(start);
+          startDate.setFullYear(startDate.getFullYear() + p.duration);
+          document.getElementById('expiryDate').value = startDate.toISOString().split('T')[0];
+        }
+      }
+    });
+
+    document.getElementById('startDate').addEventListener('change', function () {
+      document.getElementById('policy').dispatchEvent(new Event('change'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>360° Viewer with Hotspots</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+  <style>
+    #panorama-viewer {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="panorama-viewer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <script>
+    pannellum.viewer('panorama-viewer', {
+      "default": {
+        "firstScene": "livingRoom",
+        "sceneFadeDuration": 1000
+      },
+      "scenes": {
+        "livingRoom": {
+          "type": "equirectangular",
+          "panorama": "../full-seamless-hdri-360-panorama-in-interior-of-guest-living-room-hall-with-kitchen-in-studio-apartment-with-table-sofa-and-tv-in-equirectangular-spher-2NR9MXH.jpg",
+          "autoLoad": true,
+          "hotSpots": [
+            {
+              "pitch": -30,
+              "yaw": 4530,
+              "type": "scene",
+              "text": "Go",
+              "sceneId": "kitchen1"
+            }
+          ]
+        },
+        "kitchen1": {
+          "type": "equirectangular",
+          "panorama": "../kitchen1.jpg",
+          "autoLoad": true,
+          "hotSpots": [
+            {
+              "pitch": 20,
+              "yaw": -5,
+              "type": "scene",
+              "text": "Go",
+              "sceneId": "kitchen2"
+            },
+            {
+              "pitch": 10,
+              "yaw": 90,
+              "type": "scene",
+              "text": "Back to Living Room",
+              "sceneId": "livingRoom"
+            }
+          ]
+        },
+        "kitchen2": {
+          "type": "equirectangular",
+          "panorama": "../kitchen2.jpg",
+          "autoLoad": true,
+          "hotSpots": [
+            {
+              "pitch": 5,
+              "yaw": 30,
+              "type": "scene",
+              "text": "Go ",
+              "sceneId": "kitchen3"
+            },
+            {
+              "pitch": -5,
+              "yaw": -90,
+              "type": "scene",
+              "text": "Back to Kitchen 1",
+              "sceneId": "kitchen1"
+            }
+          ]
+        },
+       
+      
+      }
+    });
+  </script>
+</body>
+</html>
